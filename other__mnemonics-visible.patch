@@ -1,0 +1,15 @@
+Index: b/gtk/gtklabel.c
+===================================================================
+--- a/gtk/gtklabel.c
++++ b/gtk/gtklabel.c
+--- gtklabel.c.old	2022-02-19 01:31:25.978488782 -0400
++++ gtklabel.c	2022-02-19 01:32:13.282254836 -0400
+@@ -1955,7 +1955,7 @@
+   GtkLabel *label = GTK_LABEL (widget);
+   GtkLabelPrivate *priv = label->priv;
+ 
+-  mnemonics_visible = mnemonics_visible != FALSE;
++  mnemonics_visible = TRUE;
+ 
+   if (priv->mnemonics_visible != mnemonics_visible)
+     {

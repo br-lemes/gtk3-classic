@@ -9,7 +9,7 @@ __arch_pkg_commit="e73aeb8db960eb45cc8d7b4858293b83d4887da4"
 _gtkver=3.24.31
 
 pkgbase=gtk3-classic
-pkgname=($pkgbase lib32-$pkgbase)
+pkgname=($pkgbase)
 pkgver=${_gtkver}
 pkgrel=3
 pkgdesc="GTK3 patched to provide a more classic experience"
@@ -26,11 +26,6 @@ makedepends=(
 	libxcomposite libxdamage pango shared-mime-info at-spi2-atk wayland libxkbcommon
 	json-glib librsvg wayland-protocols desktop-file-utils mesa gtk-update-icon-cache
 	adwaita-icon-theme cantarell-fonts
-
-	lib32-atk lib32-cairo lib32-libxcursor lib32-libxinerama lib32-libxrandr lib32-libxi
-	lib32-libepoxy lib32-gdk-pixbuf2 lib32-fribidi lib32-libxcomposite lib32-libxdamage
-	lib32-pango lib32-at-spi2-atk lib32-wayland lib32-libxkbcommon lib32-json-glib
-	lib32-librsvg lib32-mesa lib32-libcups lib32-krb5 lib32-e2fsprogs
 )
 install=gtk3.install
 source=(
@@ -54,6 +49,7 @@ source=(
 	other__default-settings.patch
 	other__hide-insert-emoji.patch
 	other__mnemonics-delay.patch
+	other__mnemonics-visible.patch
 	other__remove_dead_keys_underline.patch
 	popovers__color-chooser.patch
 	popovers__file-chooser-list.patch
@@ -72,7 +68,7 @@ source=(
 	settings.ini
 	"gtk-query-immodules-3.0.hook::https://raw.githubusercontent.com/archlinux/svntogit-packages/$__arch_pkg_commit/trunk/gtk-query-immodules-3.0.hook"
 )
-sha256sums=('8dc1a547b8c54cc70aed0d88a1a89c6cc5cc59bb2c755c7192bd9613a206d5b0'
+sha256sums=('05f3cc82e0eb86ecb3b563ef253eeacff38ce426ca144ecfb335b7e6b0161e8f'
             '6de32e1bee6bf4307aaec072fc8431b044e73299720a490298b8c1b7c502e039'
             '9785368d56b851e52de00eec852fc56f636dbc66d53c74d9b102e7c060f69533'
             '760bd3d65b3c5c0be19311d3b9d2be1f33c3bec198bc470de5afe23f5d488b8f'
@@ -91,6 +87,7 @@ sha256sums=('8dc1a547b8c54cc70aed0d88a1a89c6cc5cc59bb2c755c7192bd9613a206d5b0'
             '64c36c636c73b58afa219737a1f567c37f36df5971edf4352bf0639d907f4567'
             '974374f2799aaa48b9ded985c47d2dda45d2fcdcd63f1749e74b243279467d49'
             '9761a289cf93558ec67bb498b765ccb757027b10071da938ff14fca695a0103d'
+            'a5752dade9c91c21fac9528daaf2b622ca8978827449816ee152daf8baabb8dd'
             'b92a82568a0f5c1c897561efafb55deb2331450d53377ab230def71012d8ccfc'
             'bf0e188ba6cfb24b506e4eab7e62a020348cce307d4eecde571227a058c441ad'
             '69754da0ccb0776003f2464a7d4cd433a5d02ad99801848c7b16f1de24c6988b'
@@ -125,25 +122,6 @@ build()
 		-D tests=false \
 		-D installed_tests=false
 	ninja -C build
-
-	# 32-bit
-	export PKG_CONFIG_LIBDIR="/usr/lib32/pkgconfig"
-	export PKG_CONFIG_PATH="/usr/share/pkgconfig"
-
-	CFLAGS+=" -m32"
-	CXXFLAGS+=" -m32"
-	LDFLAGS+=" -m32"
-
-	linux32 arch-meson gtk+-$_gtkver build32 \
-		-D broadway_backend=true \
-		-D colord=no \
-		-D demos=false \
-		-D examples=false \
-		-D introspection=false \
-		-D tests=false \
-		-D installed_tests=false \
-		-D libdir=/usr/lib32
-	linux32 ninja -C build32
 }
 
 package_gtk3-classic()
@@ -167,23 +145,4 @@ package_gtk3-classic()
 	install -Dt "$pkgdir/usr/share/libalpm/hooks" -m644 gtk-query-immodules-3.0.hook
 
 	rm "$pkgdir/usr/bin/gtk-update-icon-cache"
-}
-
-package_lib32-gtk3-classic()
-{
-	pkgdesc="GTK3 patched to provide a more classic experience (32-bit)"
-	depends=(
-		lib32-atk lib32-cairo lib32-libxcursor lib32-libxinerama lib32-libxrandr lib32-libxi
-		lib32-libepoxy lib32-gdk-pixbuf2 lib32-fribidi lib32-libxcomposite lib32-libxdamage
-		lib32-pango lib32-at-spi2-atk lib32-wayland lib32-libxkbcommon lib32-json-glib
-		lib32-librsvg lib32-mesa lib32-libcups lib32-krb5 lib32-e2fsprogs
-		"gtk3-classic>=$pkgver"
-	)
-	conflicts=("lib32-gtk3")
-	provides=("lib32-gtk3=$pkgver")
-
-	DESTDIR="$pkgdir" linux32 meson install -C build32
-
-	rm -fr "$pkgdir"/etc
-	rm -fr "$pkgdir"/usr/{bin,share,include}
 }
