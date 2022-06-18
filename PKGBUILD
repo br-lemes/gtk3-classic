@@ -1,12 +1,12 @@
-# Maintainer: Jonathon Fernyhough <jonathon+m2x.dev>
-# Contributor: Luke Horwell <code@horwell.me>
+# Maintainer: Luke Horwell <code@horwell.me>
+# Contributor: Jonathon Fernyhough <jonathon+m2x.dev>
 # Contributor: Tomasz Gąsior <tomaszgasior.pl>
 
 # This file is based on original PKGBUILD of GTK3 package.
 # https://git.archlinux.org/svntogit/packages.git/plain/trunk/PKGBUILD?h=packages/gtk3
 
-__arch_pkg_commit="194c90c257f7abf1094736dffd3d6152f8b0cb00"
-_gtkver=3.24.33
+__arch_pkg_commit="ef36b28a894a3de835464d89a3ac0bc2898c2317"
+_gtkver=3.24.34
 
 pkgbase=gtk3-classic
 pkgname=($pkgbase)
@@ -14,7 +14,7 @@ pkgver=${_gtkver}
 pkgrel=1
 pkgdesc="GTK3 patched to provide a more classic experience"
 url="https://github.com/lah7/gtk3-classic"
-conflicts=(gtk3 gtk3-typeahead gtk3-print-backends)
+conflicts=(gtk3 gtk3-typeahead gtk3-print-backends gtk3-nocsd gtk3-nocsd-git gtk3-nocsd-legacy-git)
 provides=(gtk3=$_gtkver gtk3-typeahead=$_gtkver gtk3-mushrooms=$_gtkver gtk3-print-backends
           libgtk-3.so libgdk-3.so libgailutil-3.so)
 arch=(x86_64)
@@ -96,7 +96,7 @@ sha256sums=('05f3cc82e0eb86ecb3b563ef253eeacff38ce426ca144ecfb335b7e6b0161e8f'
             '288978a65fbd0524e9194940b9b15774b010cb7193ef5bf5a4a5df3358ef9df6'
             '96ddecb48e5734159f91261c3a4b7f71a757d6aab69d22f11df600fb91511b11'
             'ba93f62e249f2713dbfe6c82de1be4ac655264d6407ed3dc5e05323027520f31'
-            '588b06522e25d1579e989b6f9d8a1bdbf2fe13cde01a04e904ff346a225e7801'
+            'dbc69f90ddc821b8d1441f00374dc1da4323a2eafa9078e61edbe5eeefa852ec'
             '01fc1d81dc82c4a052ac6e25bf9a04e7647267cc3017bc91f9ce3e63e5eb9202'
             'a0319b6795410f06d38de1e8695a9bf9636ff2169f40701671580e60a108e229')
 
@@ -116,7 +116,7 @@ build()
 	# 64-bit
 	arch-meson gtk+-$_gtkver build \
 		-D broadway_backend=true \
-		-D colord=no \
+		-D colord=auto \
 		-D demos=true \
 		-D examples=false \
 		-D tests=false \
