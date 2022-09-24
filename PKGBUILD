@@ -11,7 +11,7 @@ _gtkver=3.24.34
 pkgbase=gtk3-classic
 pkgname=($pkgbase)
 pkgver=${_gtkver}
-pkgrel=1
+pkgrel=2
 pkgdesc="GTK3 patched to provide a more classic experience"
 url="https://github.com/lah7/gtk3-classic"
 conflicts=(gtk3 gtk3-typeahead gtk3-print-backends gtk3-nocsd gtk3-nocsd-git gtk3-nocsd-legacy-git)
@@ -43,7 +43,6 @@ source=(
 	csd__server-side-shadow.patch
 	file-chooser__places-sidebar.patch
 	file-chooser__typeahead.patch
-	fixes__atk-bridge-errors.patch
 	fixes__labels-wrapping.patch
 	fixes__too-large-menu-covers-bar.disabled-patch
 	other__default-settings.patch
@@ -68,7 +67,8 @@ source=(
 	settings.ini
 	"gtk-query-immodules-3.0.hook::https://raw.githubusercontent.com/archlinux/svntogit-packages/$__arch_pkg_commit/trunk/gtk-query-immodules-3.0.hook"
 )
-sha256sums=('05f3cc82e0eb86ecb3b563ef253eeacff38ce426ca144ecfb335b7e6b0161e8f'
+
+sha256sums=('a1863edce41acae436ebfe5ab6575517417d66a072eef18e8d7963ba08326527'
             '6de32e1bee6bf4307aaec072fc8431b044e73299720a490298b8c1b7c502e039'
             '9785368d56b851e52de00eec852fc56f636dbc66d53c74d9b102e7c060f69533'
             '760bd3d65b3c5c0be19311d3b9d2be1f33c3bec198bc470de5afe23f5d488b8f'
@@ -79,9 +79,8 @@ sha256sums=('05f3cc82e0eb86ecb3b563ef253eeacff38ce426ca144ecfb335b7e6b0161e8f'
             '940638221f69f89e758044c37d40e2c39a14eb479afe6046c0e7e78c061e8ca2'
             'caa4da5e786a38e788617d6c9a844dfc604038d2a5d57033273859cad46d14cd'
             'cf26ab623fec6fc4f24628bdbe4b81ba5f56e8e0c61de78474d5c2411901931a'
-            'd05840cbf27ff582504c7da0ca0a173df2fe98a0b802c8e5e5a8b0dc05b0b358'
+            '6f5cfa1f3d0b1bd426e2be738b371f1910674dba8c67f4cb3de20bd55e15879e'
             'c6fd146e7ab332dd9a394b666b19e6ba7d6ac0932f33fb396f66630134257309'
-            '54fb3a39475644abaded2ac2db32c72ce8c36ee7b98ced0ee52a3f89dcac8d83'
             '7157b665e2ae724bb6abe8fc382d7178dc4d8d00f29bc63ed2942307ff41914b'
             '2b10b436ebcf8c124fac6e7867f0bf0573ecfb70130893fea37724c5f6719caf'
             '64c36c636c73b58afa219737a1f567c37f36df5971edf4352bf0639d907f4567'
@@ -129,14 +128,14 @@ package_gtk3-classic()
 	depends=(
 		atk cairo libxcursor libxinerama libxrandr libxi libepoxy gdk-pixbuf2 fribidi
 		libxcomposite libxdamage pango shared-mime-info at-spi2-atk wayland libxkbcommon
-		json-glib librsvg wayland-protocols desktop-file-utils mesa gtk-update-icon-cache
+		json-glib librsvg desktop-file-utils mesa gtk-update-icon-cache
 	)
 	optdepends=(
-		'libcups: printers in printing dialog'
-		'dconf: default GSettings backend'
-		'libcanberra: sounds events'
 		'adwaita-icon-theme: default icon theme'
 		'cantarell-fonts: default font'
+		'colord: color management support'
+		'dconf: default GSettings backend'
+		'libcups: printer support in print dialog'
 	)
 
 	DESTDIR="$pkgdir" meson install -C build

@@ -28,16 +28,38 @@ on GNOME desktops is not recommended!
 ### Arch Linux
 
 Available from the AUR under [`gtk3-classic`](https://aur.archlinux.org/packages/gtk3-classic/),
-which is based on the official [`gtk3`](https://archlinux.org/packages/extra/x86_64/gtk3/) package.
+which is based on the official [`gtk3`](https://archlinux.org/packages/extra/x86_64/gtk3/) package
+with some slight changes:
 
-Any other variant of this package is not supported.
+* These dependencies are now optional:
+    * `adwaita-icon-theme` - default icon theme
+    * `cantarell-fonts` - default font
+    * `dconf` - default GSettings backend
+    * `colord` - color management support
+    * `libcups` - enable printers in print dialog
+* Excludes demos, examples and tests.
 
-Use an AUR helper (such as `yay`) to install the package(s):
+Any variant of this package found in the wild is not supported.
 
-    yay -S gtk3-classic lib32-gtk3-classic
+There's a few ways to install:
 
-This package excludes examples and tests.
+* The [release notes](https://github.com/lah7/gtk3-classic/releases/latest) contains a package
+built autonomously by [GitHub Actions](https://github.com/lah7/gtk3-classic/actions) for your convenience.
+
+      sudo pacman -U ./*.tar.zst
+
+* Use an [AUR helper](https://wiki.archlinux.org/title/AUR_helpers), such as `yay`:
+
+      yay -S gtk3-classic lib32-gtk3-classic
+
+* Build from source, like so:
+
+      git clone https://github.com/lah7/gtk3-classic
+      cd gtk3-classic
+      makepkg -s
+
 If you've previously installed `gtk3-mushrooms`, switch to this new package.
+
 
 ### Ubuntu 20.04, 21.10, 22.04
 
@@ -115,8 +137,6 @@ To restore the original GTK3, use `ppa-purge` to restore the packages from Ubunt
 * ~~Menu bars are no longer covered by too high popup menus.~~ **(patch broken)**
   * See https://gitlab.gnome.org/GNOME/gtk/issues/1016.
 * Labels are wrapped similarly to GTK2. This patch fixes too wide windows in applications improperly ported from GTK2.
-* Errors in console output caused by integration with Accessibility Toolkit are hidden.
-  * See https://unix.stackexchange.com/questions/230238.
 * Allows windows to be transparent whenever a compositor is enabled.
   * To enable, set the `GTK_RELAX_RGBA` environment variable.
   * See https://gitlab.gnome.org/GNOME/gtk/-/issues/3105
@@ -130,6 +150,7 @@ application or theme, try reverting to the original `gtk3` to confirm
 it's **definitely** a problem with these patches.
 
 **Use Arch?** Try isolating the problematic patch by excluding them in your PKGBUILD and rebuilding.
+The included `scripts/test-exclude-each-patch.sh` script can help with this.
 
 [See Support Discussions](https://github.com/lah7/gtk3-classic/discussions/categories/help-support)
 |
@@ -164,13 +185,6 @@ regenerated automatically:
 Drop by our [Discussions](https://github.com/lah7/gtk3-classic/discussions) tab, where
 you can find curated tips, chat and introductions from other classic users. There is
 also a category for help & support, if you need help getting GTK related stuff working.
-
-
-## Building from Source
-
-Arch users can clone this repository and run `makepkg`. You may need to
-install the build dependencies by passing `-s`. If the package is successfully
-built, install with `sudo pacman -U *.tar.zst`.
 
 
 ## License
