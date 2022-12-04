@@ -33,15 +33,21 @@ jobs:
         key: gtk-${{ env.GTK_VERSION }}
 
     - name: Download GTK Source
-      if: steps.gtksrc.outputs.cache-hit != 'true'
+      #if: steps.gtksrc.outputs.cache-hit != 'true'
       run: |
         source PKGBUILD
-        wget https://download.gnome.org/sources/gtk+/${pkgver%.*}/gtk+-${_gtkver}.tar.xz
+        #wget https://download.gnome.org/sources/gtk+/${pkgver%.*}/gtk+-${_gtkver}.tar.xz
+
+        # 3.24.35 only: Due to missing source file (#87)
+        wget https://gitlab.gnome.org/GNOME/gtk/-/archive/b2ad8d2abafbd94c7e58e5e1b98c92e6b6fa6d9a/gtk-b2ad8d2abafbd94c7e58e5e1b98c92e6b6fa6d9a.tar.bz2
 
     - name: Extract GTK Source
       run: |
         source PKGBUILD
-        tar -xJf gtk+*.tar.xz
+        #tar -xJf gtk+*.tar.xz
+
+        # 3.24.35 only: Due to missing source file (#87)
+        tar -xjf gtk-*.tar.bz2
 
     # Uses PKGBUILD prepare() directly
     - name: Apply Patches
@@ -55,12 +61,13 @@ jobs:
     - name: Build
       run: |
         source PKGBUILD
-        CFLAGS+=" -DG_ENABLE_DEBUG -DG_DISABLE_CAST_CHECKS"
+        CFLAGS+=" -DG_DISABLE_CAST_CHECKS"
         meson gtk+-${_gtkver} build \
             -D broadway_backend=true \
             -D colord=auto \
             -D demos=true \
             -D examples=false \
+            -D introspection=true \
             -D tests=false \
             -D installed_tests=false
         ninja -C build

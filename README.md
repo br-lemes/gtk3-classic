@@ -19,13 +19,9 @@ on GNOME desktops is not recommended!
 [View Screenshots](https://github.com/lah7/gtk3-classic/wiki/Screenshots)
 
 
-## Installation
+## Arch Linux
 
 [![AUR](https://img.shields.io/aur/version/gtk3-classic?label=AUR&logo=archlinux&logoColor=white)](https://aur.archlinux.org/packages/gtk3-classic/)
-[![Ubuntu](https://img.shields.io/badge/Ubuntu-ppa%3Alah7%2Fgtk3--classic-e95420?logo=ubuntu&logoColor=white)](https://launchpad.net/~lah7/+archive/ubuntu/gtk3-classic)
-
-
-### Arch Linux
 
 Available from the AUR under [`gtk3-classic`](https://aur.archlinux.org/packages/gtk3-classic/),
 which is based on the official [`gtk3`](https://archlinux.org/packages/extra/x86_64/gtk3/) package
@@ -61,7 +57,11 @@ built autonomously by [GitHub Actions](https://github.com/lah7/gtk3-classic/acti
 If you've previously installed `gtk3-mushrooms`, switch to this new package.
 
 
-### Ubuntu 20.04, 21.10, 22.04
+## Ubuntu
+
+[![Ubuntu](https://img.shields.io/badge/Ubuntu-ppa%3Alah7%2Fgtk3--classic-e95420?logo=ubuntu&logoColor=white)](https://launchpad.net/~lah7/+archive/ubuntu/gtk3-classic)
+
+> Available for these releases: 20.04, 21.10, 22.04
 
 These packages are based on the original [`gtk+3.0`](https://packages.ubuntu.com/search?section=all&arch=any&keywords=gtk%2B3.0&searchon=sourcenames)
 package, with the version suffixed with `~classic`.
@@ -71,12 +71,35 @@ To install, [add the repository](https://launchpad.net/~lah7/+archive/ubuntu/gtk
     sudo add-apt-repository ppa:lah7/gtk3-classic
     sudo apt dist-upgrade
 
-Available for these architectures: amd64, arm64, armhf, i386, powerpc and ppc64el.
-
 To restore the original GTK3, use `ppa-purge` to restore the packages from Ubuntu's repository:
 
     sudo apt-get install ppa-purge
     sudo ppa-purge ppa:lah7/gtk3-classic
+
+
+## Gentoo
+
+An unofficial Gentoo ebuild is available as `x11-libs/gtk3-classic-patches` in
+the `khoverlay` overlay.  Rather than providing a patched `x11-libs/gtk+:3`
+ebuild directly, this ebuild installs user patches which will be applied on
+subsequent builds of GTK3.  This way, the latest official Gentoo GTK3 ebuild can
+always be used.
+
+To install, first add the overlay and accept the package's testing status:
+
+    sudo eselect repository enable khoverlay
+    sudo emerge --sync khoverlay
+    echo 'x11-libs/gtk3-classic-patches::khoverlay' | sudo tee /etc/portage/package.accept_keywords
+
+Then install the patches and rebuild GTK3:
+
+    sudo emerge -av gtk3-classic-patches
+    sudo emerge -av1 gtk+:3
+
+To revert to standard GTK3, remove the patches and rebuild GTK3:
+
+    sudo emerge -cav gtk3-classic-patches
+    sudo emerge -av1 gtk+:3
 
 
 ## Patches
