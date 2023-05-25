@@ -3,16 +3,16 @@
 # Contributor: Tomasz Gąsior <tomaszgasior.pl>
 
 # This file is based on original PKGBUILD of GTK3 package.
-# https://git.archlinux.org/svntogit/packages.git/plain/trunk/PKGBUILD?h=packages/gtk3
+# https://gitlab.archlinux.org/archlinux/packaging/packages/gtk3/-/commits/main
 
-__arch_pkg_commit="a683ff63aa2c307fe73f4cc6f464791951b14f7c"
-_gtkver=3.24.37
+__arch_pkg_commit="108c7090a77081cd124c819e014ced95b4648d55"
+_gtkver=3.24.38
 
 pkgbase=gtk3-classic
 pkgname=($pkgbase)
 pkgver=${_gtkver}
-pkgrel=2
-pkgdesc="GTK3 patched to provide a more classic experience"
+pkgrel=1
+pkgdesc="Patched GTK+3 that provides a more classic experience"
 url="https://github.com/lah7/gtk3-classic"
 conflicts=(gtk3 gtk3-typeahead gtk3-print-backends gtk3-nocsd gtk3-nocsd-git gtk3-nocsd-legacy-git)
 provides=(gtk3=$_gtkver gtk3-typeahead=$_gtkver gtk3-mushrooms=$_gtkver gtk3-print-backends
@@ -93,10 +93,12 @@ source=(
 	csd__clean-headerbar.patch
 	csd__disabled-by-default.patch
 	csd__server-side-shadow.patch
+	file-chooser__eject-button.patch
 	file-chooser__places-sidebar.patch
 	file-chooser__typeahead.patch
 	fixes__labels-wrapping.patch
 	fixes__too-large-menu-covers-bar.disabled-patch
+	fixes__wayland_dialogs_header_setting.patch
 	other__default-settings.patch
 	other__hide-insert-emoji.patch
 	other__mnemonics-delay.patch
@@ -117,9 +119,9 @@ source=(
 
 	# Arch Linux package files.
 	settings.ini
-	"gtk-query-immodules-3.0.hook::https://raw.githubusercontent.com/archlinux/svntogit-packages/$__arch_pkg_commit/trunk/gtk-query-immodules-3.0.hook"
+	"gtk-query-immodules-3.0.hook::https://gitlab.archlinux.org/archlinux/packaging/packages/gtk3/-/raw/$__arch_pkg_commit/gtk-query-immodules-3.0.hook"
 )
-sha256sums=('5f7c5b907602fc0e888fdc7651c2bfa7e5fc3dc9a4d483ad72c5537996990121'
+sha256sums=('635303dc959966c64f111b9010365af7eca0027abc37a2d98bf74d98f1491b49'
             '6de32e1bee6bf4307aaec072fc8431b044e73299720a490298b8c1b7c502e039'
             '9785368d56b851e52de00eec852fc56f636dbc66d53c74d9b102e7c060f69533'
             '760bd3d65b3c5c0be19311d3b9d2be1f33c3bec198bc470de5afe23f5d488b8f'
@@ -130,10 +132,12 @@ sha256sums=('5f7c5b907602fc0e888fdc7651c2bfa7e5fc3dc9a4d483ad72c5537996990121'
             '940638221f69f89e758044c37d40e2c39a14eb479afe6046c0e7e78c061e8ca2'
             'caa4da5e786a38e788617d6c9a844dfc604038d2a5d57033273859cad46d14cd'
             'cf26ab623fec6fc4f24628bdbe4b81ba5f56e8e0c61de78474d5c2411901931a'
+            'ffd9112691b890e263e3eafec71c9838e215c41e6dfd4750e1a498332afbf8f4'
             '6f5cfa1f3d0b1bd426e2be738b371f1910674dba8c67f4cb3de20bd55e15879e'
             'c6fd146e7ab332dd9a394b666b19e6ba7d6ac0932f33fb396f66630134257309'
             '7157b665e2ae724bb6abe8fc382d7178dc4d8d00f29bc63ed2942307ff41914b'
             '2b10b436ebcf8c124fac6e7867f0bf0573ecfb70130893fea37724c5f6719caf'
+            '3f18f2389cf6b26be71db2edaa04969ecd4df4b1fe62e25dc6da83ff374c9d13'
             '64c36c636c73b58afa219737a1f567c37f36df5971edf4352bf0639d907f4567'
             '974374f2799aaa48b9ded985c47d2dda45d2fcdcd63f1749e74b243279467d49'
             '9761a289cf93558ec67bb498b765ccb757027b10071da938ff14fca695a0103d'
@@ -146,7 +150,7 @@ sha256sums=('5f7c5b907602fc0e888fdc7651c2bfa7e5fc3dc9a4d483ad72c5537996990121'
             '288978a65fbd0524e9194940b9b15774b010cb7193ef5bf5a4a5df3358ef9df6'
             '96ddecb48e5734159f91261c3a4b7f71a757d6aab69d22f11df600fb91511b11'
             'ba93f62e249f2713dbfe6c82de1be4ac655264d6407ed3dc5e05323027520f31'
-            '6745f0b4c053794151fd0f0e2474b077cccff5f83e9dd1bf3d39fe9fe5fb7f57'
+            'ce11decf018b25bdd8505544a4f87242854ec88be054d9ade5f3a20444dd8ee7'
             '01fc1d81dc82c4a052ac6e25bf9a04e7647267cc3017bc91f9ce3e63e5eb9202'
             'a0319b6795410f06d38de1e8695a9bf9636ff2169f40701671580e60a108e229')
 

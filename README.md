@@ -89,7 +89,7 @@ To install, first add the overlay and accept the package's testing status:
 
     sudo eselect repository enable khoverlay
     sudo emerge --sync khoverlay
-    echo 'x11-libs/gtk3-classic-patches::khoverlay' | sudo tee /etc/portage/package.accept_keywords
+    echo 'x11-libs/gtk3-classic-patches::khoverlay' | sudo tee -a /etc/portage/package.accept_keywords
 
 Then install the patches and rebuild GTK3:
 
@@ -124,6 +124,7 @@ To revert to standard GTK3, remove the patches and rebuild GTK3:
 * Trash and XDG user directories (like Pictures, Downloads, Documents) are removed from Places sidebar.
   * These can be added as bookmarks.
 * File System button in Places sidebar is labeled as "File System" instead of "Computer".
+* The eject button in the Places sidebar can be hidden by setting `gtk-file-chooser-eject-button=false` in `settings.ini`.
 
 #### Appearance
 
@@ -163,6 +164,7 @@ To revert to standard GTK3, remove the patches and rebuild GTK3:
 * Allows windows to be transparent whenever a compositor is enabled.
   * To enable, set the `GTK_RELAX_RGBA` environment variable.
   * See https://gitlab.gnome.org/GNOME/gtk/-/issues/3105
+* Remove hardcoded "gtk-dialogs-use-header" setting under Wayland [(#93)](https://github.com/lah7/gtk3-classic/pull/93)
 
 
 ## Problems?
@@ -182,17 +184,18 @@ The included `scripts/test-exclude-each-patch.sh` script can help with this.
 
 ## Contributing
 
-Due to our limited knowledge with C, we'd appreciate any
-help in fixing bugs caused by patches or any new contributions.
+Our knowledge in C is limited, so we'd appreciate any help in fixing open bugs.
 
-Patches should not break GTK3 or any applications, and should offer "classic"
-functionality as seen in GTK2 or early versions of GTK3.
+Patches should:
+
+* Not break GTK3 or any GTK applications.
+* Offer "classic" functionality remensiant of GTK2 or early versions of GTK3.
 
 Patches are managed using `quilt`.
 
 [How to use `quilt`](https://github.com/lah7/gtk3-classic/wiki/Creating-and-Managing-Patches)
 |
-[View Tasks](https://github.com/lah7/gtk3-classic/issues?q=is%3Aissue+is%3Aopen+label%3A%22help+wanted%22)
+[View Open Issues](https://github.com/lah7/gtk3-classic/issues?q=is%3Aissue+is%3Aopen+label%3A%22help+wanted%22)
 
 Our primary packaging and testing happens on Arch. Checksums in `PKGBUILD`
 need to be updated to pass the automated checks. On an Arch system, these can be
@@ -208,6 +211,10 @@ regenerated automatically:
 Drop by our [Discussions](https://github.com/lah7/gtk3-classic/discussions) tab, where
 you can find curated tips, chat and introductions from other classic users. There is
 also a category for help & support, if you need help getting GTK related stuff working.
+
+XFCE users might be interested in these additional patches:
+
+* https://github.com/simplejack-src/gtk3-classic-xfce
 
 
 ## License
