@@ -106,9 +106,11 @@ To revert to standard GTK3, remove the patches and rebuild GTK3:
 
 #### Client Side Decorations (only on Xorg)
 
-* **CSDs are disabled by default.**
-  * All windows are decorated only by window manager.
-  * You can enable CSDs by setting `GTK_CSD=0` environment variable (or `GTK_CSD=1` to force CSDs on each GTK3 window).
+* **CSDs are disabled by default**
+  * Allows the window manager to decorate windows instead of the application.
+  * This **does not work** for all (usually, newer) GTK applications [(#32)](https://github.com/lah7/gtk3-classic/issues/32)
+  * If the app looks broken, set the environment variable `GTK_CSD=0` per app (or in your desktop environment) to restore CSDs.
+  * It is possible to set `GTK_CSD=1` to force CSDs on each GTK 3 window.
 * Client side shadows of windows, menus and tooltips are disabled by default.
   * You can enable shadows by setting `GTK_CSD=1` environment variable.
 * Minimize, maximize and close buttons, window title and subtitle are removed from headerbar.
@@ -165,6 +167,18 @@ To revert to standard GTK3, remove the patches and rebuild GTK3:
   * To enable, set the `GTK_RELAX_RGBA` environment variable.
   * See https://gitlab.gnome.org/GNOME/gtk/-/issues/3105
 * Remove hardcoded "gtk-dialogs-use-header" setting under Wayland [(#93)](https://github.com/lah7/gtk3-classic/pull/93)
+* The _primary selection_ is no longer cleared when deselecting text.
+  * This refers to an X.org feature that lets you middle click to paste the last highlighted text at the mouse pointer's position. This is separate from your main clipboard (CTRL+C, CTRL+V).
+  * This makes GTK consistent with other toolkits.
+  * See https://gitlab.gnome.org/GNOME/gtk/-/issues/317
+
+#### Build time
+
+* `atk-bridge` can be optionally disabled. [(#101)](https://github.com/lah7/gtk3-classic/pull/101)
+  * Similar to how you could build with `--without-atk-bridge` over a decade ago.
+  * This would remove support for accessibility features; some apps could break.
+  * Allows for D-Bus to be an optional dependency. [(#40)](https://github.com/lah7/gtk3-classic/issues/40)
+  * To build without this feature, set meson option `atk_bridge` to `false` (default: `true`) and remove the dependencies from your package accordingly.
 
 
 ## Problems?

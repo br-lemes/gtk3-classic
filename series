@@ -14,6 +14,9 @@ file-chooser__typeahead.patch
 fixes__labels-wrapping.patch
 #fixes__too-large-menu-covers-bar.patch
 fixes__wayland_dialogs_header_setting.patch
+gtk+-atk-bridge-gtkaccessibility.patch
+gtk+-atk-bridge-meson.build.patch
+gtk+-atk-bridge-meson_options.txt.patch
 other__default-settings.patch
 other__hide-insert-emoji.patch
 other__mnemonics-delay.patch
@@ -25,3 +28,4 @@ popovers__places-sidebar.patch
 notebook_wheel_scroll.patch
 treeview__alternating_row_colours.patch
 window__rgba-visual.patch
+fixes__primary_selection.patch
