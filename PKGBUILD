@@ -5,23 +5,22 @@
 # This file is based on original PKGBUILD of GTK3 package.
 # https://gitlab.archlinux.org/archlinux/packaging/packages/gtk3/-/commits/main
 
-__arch_pkg_commit="fd2d2dbbb1d22e97b79f308d6252523833a909d3"
-_gtkver=3.24.39
+__arch_pkg_commit="c2ecfe23993aeff132fbd58d6b1174c98444cbd4"
+_gtkver=3.24.43
 
 pkgbase=gtk3-classic
 pkgname=($pkgbase)
 pkgver=${_gtkver}
-pkgrel=1
+pkgrel=2
 pkgdesc="Patched GTK+3 that provides a more classic experience"
 url="https://github.com/lah7/gtk3-classic"
 conflicts=(gtk3 gtk3-typeahead gtk3-print-backends gtk3-nocsd gtk3-nocsd-git gtk3-nocsd-legacy-git)
 provides=(gtk3=$_gtkver gtk3-typeahead=$_gtkver gtk3-mushrooms=$_gtkver gtk3-print-backends
           libgtk-3.so libgdk-3.so libgailutil-3.so)
 arch=(x86_64)
-license=(LGPL)
+license=(LGPL-2.1-or-later)
 depends=(
-	at-spi2-atk
-	atk
+	at-spi2-core
 	cairo
 	desktop-file-utils
 	fribidi
@@ -48,17 +47,16 @@ optdepends=(
 	'libcups: printer support in print dialog'
 )
 makedepends=(
-	adwaita-icon-theme
-	at-spi2-atk
-	atk
 	cairo
 	cantarell-fonts
 	desktop-file-utils
 	fribidi
 	gdk-pixbuf2
 	git
+ 	glib2-devel
 	gobject-introspection
 	gtk-update-icon-cache
+	hicolor-icon-theme
 	libcups
 	libegl
 	libepoxy
@@ -73,6 +71,7 @@ makedepends=(
 	libxrandr
 	meson
 	pango
+	python-packaging
 	quilt
 	sassc
 	shared-mime-info
@@ -126,11 +125,11 @@ source=(
 	"gtk-query-immodules-3.0.hook::https://gitlab.archlinux.org/archlinux/packaging/packages/gtk3/-/raw/$__arch_pkg_commit/gtk-query-immodules-3.0.hook"
 )
 sha256sums=('b393a6665aac8c3ede6a7bc79bdd3dfd3edd16c526060ada8ec434c98984a7f2'
-            '6de32e1bee6bf4307aaec072fc8431b044e73299720a490298b8c1b7c502e039'
+            '5723d1d2c0e69ce2e7f36973560a2297f6288e1fdfa4f6946104347080c7fc8c'
             '9785368d56b851e52de00eec852fc56f636dbc66d53c74d9b102e7c060f69533'
             '760bd3d65b3c5c0be19311d3b9d2be1f33c3bec198bc470de5afe23f5d488b8f'
             '736821182ac014617006e9d00fafa807a19611f3a9032133dee91b4656b7980a'
-            '00927690718c65f6b3c025e2e919028f41cd522c573964dd7fdc31b3022b983f'
+            '7573f278af2cf64e365f253f74e7a7e6d3459c7f93e5cb3850877313f2d0f751'
             'db82bc4647eda7cc102590d5cfffd8524cf126a704358096e0e66f5c068fe46f'
             '24217b43a7ca5bd46ff205b8f2a7c5a5192cafc36f5093255ed9053e5496afed'
             '940638221f69f89e758044c37d40e2c39a14eb479afe6046c0e7e78c061e8ca2'
@@ -152,13 +151,13 @@ sha256sums=('b393a6665aac8c3ede6a7bc79bdd3dfd3edd16c526060ada8ec434c98984a7f2'
             'a5752dade9c91c21fac9528daaf2b622ca8978827449816ee152daf8baabb8dd'
             'b92a82568a0f5c1c897561efafb55deb2331450d53377ab230def71012d8ccfc'
             'bf0e188ba6cfb24b506e4eab7e62a020348cce307d4eecde571227a058c441ad'
-            '69754da0ccb0776003f2464a7d4cd433a5d02ad99801848c7b16f1de24c6988b'
-            'af2d2d4a0d876f9abc350a1cdb09ffc016a8894ee3c46030c3d90c6e99b27c5a'
+            'ba31709dad005ac06a86222ee6ead41175d88f8f61fd4d541770f957383431a7'
+            '7c52a25019d52e02254cc7b578d32aeea87c2fd5f708ef71dbeb6b7edd0aa08e'
             '904a819f3c484736384964b77591cae6dca17e849949f7a80d13f134a159ab32'
             '288978a65fbd0524e9194940b9b15774b010cb7193ef5bf5a4a5df3358ef9df6'
             '96ddecb48e5734159f91261c3a4b7f71a757d6aab69d22f11df600fb91511b11'
             'ba93f62e249f2713dbfe6c82de1be4ac655264d6407ed3dc5e05323027520f31'
-            '1cac3e566b9b2f3653a458c08c2dcdfdca9f908037ac03c9d8564b4295778d79'
+            '7e04f0648515034b806b74ae5d774d87cffb1a2a96c468cb5be476d51bf2f3c7'
             '01fc1d81dc82c4a052ac6e25bf9a04e7647267cc3017bc91f9ce3e63e5eb9202'
             'a0319b6795410f06d38de1e8695a9bf9636ff2169f40701671580e60a108e229')
 
