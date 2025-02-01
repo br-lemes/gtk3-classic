@@ -14,7 +14,8 @@ These are designed to work on non-GNOME desktops (such as XFCE and MATE)
 and any other environment where GTK applications are used. Running
 on GNOME desktops is not recommended!
 
-[View Screenshots](https://github.com/lah7/gtk3-classic/wiki/Screenshots)
+[View Screenshots](https://github.com/lah7/gtk3-classic/wiki/Screenshots) |
+[View Wiki](https://github.com/lah7/gtk3-classic/wiki)
 
 
 ## About
@@ -36,7 +37,7 @@ While the patched installation should just work, you are entering unsupported te
 
 * [Arch Linux](#arch-linux)
 * [Gentoo](#gentoo)
-* [Ubuntu (LTS)](#ubuntu)
+* [Ubuntu (LTS)](#ubuntu) (discontinued)
 
 ### Arch Linux
 
@@ -79,9 +80,15 @@ built autonomously by [GitHub Actions](https://github.com/lah7/gtk3-classic/acti
 
 ### Ubuntu
 
-[![Ubuntu](https://img.shields.io/badge/Ubuntu-ppa%3Alah7%2Fgtk3--classic-e95420?logo=ubuntu&logoColor=white)](https://launchpad.net/~lah7/+archive/ubuntu/gtk3-classic)
+> [!WARNING]
+> Ubuntu packages for gtk3-classic has been discontinued.
+> The existing PPA will continue to work, but no new packages will be created.
+> **Use at your own risk.**
+>
+> [You may build them yourself](https://github.com/lah7/gtk3-classic/wiki/Ubuntu-Packaging) or contribute improvements to reliably build locally via our [create-ubuntu-package.sh](scripts/create-ubuntu-package.sh) script.
 
-> **Only available for LTS releases** (starting from 20.04)
+> [!NOTE]
+> **Only available for LTS releases:** 20.04, 22.04, 24.04
 
 These packages are based on the original [`gtk+3.0`](https://packages.ubuntu.com/search?section=all&arch=any&keywords=gtk%2B3.0&searchon=sourcenames)
 package, with the version suffixed with `~classic`. These packages are rarely
@@ -96,6 +103,9 @@ To restore the original GTK 3, use `ppa-purge` to restore the packages from Ubun
 
     sudo apt-get install ppa-purge
     sudo ppa-purge ppa:lah7/gtk3-classic
+
+This works for stock Ubuntu. If you're using an Ubuntu derivative (like Linux Mint), you may need to
+[manually downgrade packages](https://github.com/lah7/gtk3-classic/issues/116#issuecomment-2439990293) instead.
 
 
 ## Gentoo
@@ -260,4 +270,4 @@ XFCE users might be interested in this additional patch for the file chooser:
 
 ## License
 
-Patches follow the same license as [GTK 3](https://gitlab.gnome.org/GNOME/gtk/-/commits/gtk-3-24), which is [LGPL](https://gitlab.gnome.org/GNOME/gtk/-/blob/main/COPYING?ref_type=heads).
+Patches follow the same license as [GTK 3](https://gitlab.gnome.org/GNOME/gtk/-/commits/gtk-3-24), which is [LGPLv2](https://gitlab.gnome.org/GNOME/gtk/-/blob/main/COPYING?ref_type=heads).

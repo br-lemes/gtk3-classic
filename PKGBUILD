@@ -5,8 +5,8 @@
 # This file is based on original PKGBUILD of GTK3 package.
 # https://gitlab.archlinux.org/archlinux/packaging/packages/gtk3/-/commits/main
 
-__arch_pkg_commit="c2ecfe23993aeff132fbd58d6b1174c98444cbd4"
-_gtkver=3.24.43
+__arch_pkg_commit="8546d3057e3037ffdd3526a329742951b35892b3"
+_gtkver=3.24.48
 
 pkgbase=gtk3-classic
 pkgname=($pkgbase)
@@ -14,9 +14,23 @@ pkgver=${_gtkver}
 pkgrel=2
 pkgdesc="Patched GTK+3 that provides a more classic experience"
 url="https://github.com/lah7/gtk3-classic"
-conflicts=(gtk3 gtk3-typeahead gtk3-print-backends gtk3-nocsd gtk3-nocsd-git gtk3-nocsd-legacy-git)
-provides=(gtk3=$_gtkver gtk3-typeahead=$_gtkver gtk3-mushrooms=$_gtkver gtk3-print-backends
-          libgtk-3.so libgdk-3.so libgailutil-3.so)
+conflicts=(
+	gtk3
+	gtk3-typeahead
+	gtk3-print-backends
+	gtk3-nocsd
+	gtk3-nocsd-git
+	gtk3-nocsd-legacy-git
+)
+provides=(
+	gtk3=$_gtkver
+	gtk3-typeahead=$_gtkver
+	gtk3-mushrooms=$_gtkver
+	gtk3-print-backends
+	libgtk-3.so
+	libgdk-3.so
+	libgailutil-3.so
+)
 arch=(x86_64)
 license=(LGPL-2.1-or-later)
 depends=(
@@ -53,7 +67,7 @@ makedepends=(
 	fribidi
 	gdk-pixbuf2
 	git
- 	glib2-devel
+	glib2-devel
 	gobject-introspection
 	gtk-update-icon-cache
 	hicolor-icon-theme
@@ -118,7 +132,7 @@ source=(
 	smaller-adwaita.css
 
 	# GTK source code.
-	"https://download.gnome.org/sources/gtk+/${pkgver%.*}/gtk+-$_gtkver.tar.xz"
+	"https://gitlab.gnome.org/GNOME/gtk/-/archive/$_gtkver/gtk-$_gtkver.tar.gz"
 
 	# Arch Linux package files.
 	settings.ini
@@ -129,7 +143,7 @@ sha256sums=('b393a6665aac8c3ede6a7bc79bdd3dfd3edd16c526060ada8ec434c98984a7f2'
             '9785368d56b851e52de00eec852fc56f636dbc66d53c74d9b102e7c060f69533'
             '760bd3d65b3c5c0be19311d3b9d2be1f33c3bec198bc470de5afe23f5d488b8f'
             '736821182ac014617006e9d00fafa807a19611f3a9032133dee91b4656b7980a'
-            '7573f278af2cf64e365f253f74e7a7e6d3459c7f93e5cb3850877313f2d0f751'
+            '0da7fabf10ba9419ce50c81341fc9c4e92c4beab73d511575507bdc0c40d033f'
             'db82bc4647eda7cc102590d5cfffd8524cf126a704358096e0e66f5c068fe46f'
             '24217b43a7ca5bd46ff205b8f2a7c5a5192cafc36f5093255ed9053e5496afed'
             '940638221f69f89e758044c37d40e2c39a14eb479afe6046c0e7e78c061e8ca2'
@@ -157,18 +171,18 @@ sha256sums=('b393a6665aac8c3ede6a7bc79bdd3dfd3edd16c526060ada8ec434c98984a7f2'
             '288978a65fbd0524e9194940b9b15774b010cb7193ef5bf5a4a5df3358ef9df6'
             '96ddecb48e5734159f91261c3a4b7f71a757d6aab69d22f11df600fb91511b11'
             'ba93f62e249f2713dbfe6c82de1be4ac655264d6407ed3dc5e05323027520f31'
-            '7e04f0648515034b806b74ae5d774d87cffb1a2a96c468cb5be476d51bf2f3c7'
+            'fa02692d8cc717bdadbba15f5b5ba0849f2135ee7ed71edd1da27013152500da'
             '01fc1d81dc82c4a052ac6e25bf9a04e7647267cc3017bc91f9ce3e63e5eb9202'
             'a0319b6795410f06d38de1e8695a9bf9636ff2169f40701671580e60a108e229')
 
 prepare()
 {
-	cd gtk+-$_gtkver
+	cd gtk-$_gtkver
 
 	QUILT_PATCHES=.. quilt push -av
 
-	rm -f "$srcdir"/gtk+-"$_gtkver"/gtk/theme/Adwaita/gtk-contained{,-dark}.css
-	cat "$srcdir/smaller-adwaita.css" | tee -a "$srcdir"/gtk+-"$_gtkver"/gtk/theme/Adwaita/gtk-contained{,-dark}.css > /dev/null
+	rm -f "$srcdir"/gtk-"$_gtkver"/gtk/theme/Adwaita/gtk-contained{,-dark}.css
+	cat "$srcdir/smaller-adwaita.css" | tee -a "$srcdir"/gtk-"$_gtkver"/gtk/theme/Adwaita/gtk-contained{,-dark}.css > /dev/null
 }
 
 build()
@@ -176,7 +190,7 @@ build()
 	CFLAGS+=" -DG_DISABLE_CAST_CHECKS"
 
 	# 64-bit
-	arch-meson gtk+-$_gtkver build \
+	arch-meson gtk-$_gtkver build \
 		-D broadway_backend=true \
 		-D colord=auto \
 		-D demos=false \
@@ -191,8 +205,8 @@ package_gtk3-classic()
 {
 	DESTDIR="$pkgdir" meson install -C build
 
-	install -Dt "$pkgdir/usr/share/gtk-3.0" -m644 settings.ini
-	install -Dt "$pkgdir/usr/share/libalpm/hooks" -m644 gtk-query-immodules-3.0.hook
+	install -Dm644 settings.ini -t "$pkgdir/usr/share/gtk-3.0"
+	install -Dm644 gtk-query-immodules-3.0.hook -t "$pkgdir/usr/share/libalpm/hooks"
 
 	rm "$pkgdir/usr/bin/gtk-update-icon-cache"
 }
